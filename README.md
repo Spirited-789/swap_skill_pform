@@ -26,6 +26,8 @@ The Skill Swap Platform is a mini-application designed to foster a community whe
 - **Platform-Wide Messaging**: Send broadcast messages to users.
 - **Reporting & Analytics**: Download reports such as user activity logs and feedback statistics.
 
-Team name: Shivenkaushik2022
+Team name: Shivenkaushik2022 
+
 TL: Shiven Kaushik
+
 TL email : shivenkaushik2022@vitbhopal.ac.in
