@@ -93,4 +93,100 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+// GET USER PROFILE
+const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error("Get Profile Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// UPDATE USER PROFILE
+const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updates = req.body;
+
+    // Disallow updates to sensitive fields
+    delete updates.password;
+    delete updates.email;
+    delete updates.role;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "Profile updated", user: updatedUser });
+  } catch (err) {
+    console.error("Update Profile Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+const searchUsers = async (req, res) => {
+  try {
+    const { term, skill, availability, rating, sort } = req.query;
+    const query = {
+      isPublic: true,
+      role: "user",
+      ...(availability && { availability }),
+    };
+
+    if (term) {
+      query.$text = { $search: term };
+    }
+
+    if (skill) {
+      query.skillsOffered = skill;
+    }
+
+    const users = await User.find(query).select("-password");
+
+    let filtered = users;
+
+    if (rating) {
+      const minRating = parseFloat(rating);
+      filtered = filtered.filter(u => u.rating >= minRating);
+    }
+
+    // Sort logic
+    switch (sort) {
+      case "rating":
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case "swaps":
+        filtered.sort((a, b) => b.totalSwaps - a.totalSwaps);
+        break;
+      case "recent":
+      default:
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+    }
+
+    res.json(filtered);
+  } catch (err) {
+    console.error("Search Users Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+module.exports = {
+  register, 
+  login, 
+  getUserProfile,
+  updateUserProfile,
+  searchUsers
+};
+
+

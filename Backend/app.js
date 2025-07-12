@@ -9,6 +9,18 @@ const {Feedback} = require('./models/FeedbackModel');
 const {Message} = require('./models/MessageModel');
 const {Report} = require('./models/ReportModel');
 
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
+
+const swapRoutes = require('./routes/swapRoutes');
+app.use('/api/swap', swapRoutes);
+
+const userRoutes = require('./routes/userRoute');
+app.use('/api/user', userRoutes);
+
+const dashboardRoutes = require('./routes/dashboardRoutes');
+app.use('/api/dashboard', dashboardRoutes);
+
 
 // Load environment variables from .env file
 dotenv.config();
