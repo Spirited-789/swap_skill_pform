@@ -30,4 +30,4 @@ Team name: Shivenkaushik2022
 
 TL: Shiven Kaushik
 
-TL email : shivenkaushik2022@vitbhopal.ac.in
+TL email: shivenkaushik2022@vitbhopal.ac.in
