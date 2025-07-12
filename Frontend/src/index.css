@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom transitions */
+.transition-slow {
+  transition-duration: 500ms;
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Glass morphism effect */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom shadows */
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Gradient text */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+@keyframes floatEffect {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg); /* Start with original size and no rotation */
+    opacity: 0.3; /* More visible at start */
+  }
+  25% {
+    transform: translate(70px, -100px) scale(1.2) rotate(15deg); /* Move up-right, larger, rotate */
+    opacity: 0.6; /* More visible */
+  }
+  50% {
+    transform: translate(-50px, -200px) scale(1.3) rotate(-15deg); /* Move further up-left, even larger, rotate */
+    opacity: 0.9; /* Fully visible at peak */
+  }
+  75% {
+    transform: translate(80px, -100px) scale(1.2) rotate(10deg); /* Move back down-right */
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(0deg); /* Return to original */
+    opacity: 0.3; /* Return to start opacity */
+  }
+}
+
+.floating-box {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4); /* Dark, semi-transparent */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+  border-radius: 5px; /* Slightly rounded corners for "square" look */
+  animation: floatEffect 18s ease-in-out infinite alternate; /* Slower, smoother animation */
+  z-index: 0; /* Behind the main card */
+}
+
+/* Individual box properties for varied appearance and movement */
+/* These will be overridden by media queries for mobile */
+.floating-box:nth-child(1) { width: 100px; height: 100px; top: 10%; left: 5%; animation-delay: 0s; animation-duration: 20s; }
+.floating-box:nth-child(2) { width: 70px; height: 70px; top: 40%; right: 10%; animation-delay: 2s; animation-duration: 18s; }
+.floating-box:nth-child(3) { width: 130px; height: 130px; bottom: 5%; left: 20%; animation-delay: 4s; animation-duration: 22s; }
+.floating-box:nth-child(4) { width: 80px; height: 80px; top: 25%; right: 25%; animation-delay: 1s; animation-duration: 19s; }
+.floating-box:nth-child(5) { width: 90px; height: 90px; bottom: 15%; right: 5%; animation-delay: 3s; animation-duration: 21s; }
+.floating-box:nth-child(6) { width: 60px; height: 60px; top: 70%; left: 40%; animation-delay: 5s; animation-duration: 15s; }
+.floating-box:nth-child(7) { width: 110px; height: 110px; top: 5%; right: 40%; animation-delay: 2.5s; animation-duration: 24s; }
+.floating-box:nth-child(8) { width: 50px; height: 50px; bottom: 40%; left: 10%; animation-delay: 6s; animation-duration: 17s; }
+
+/* Responsive adjustments for floating boxes */
+/* Hide most floating boxes on small screens to prevent clutter */
+@media (max-width: 768px) {
+  .floating-box {
+    display: none; /* Hide all by default on smaller screens */
+  }
+
+  /* You can selectively display a few smaller ones if you wish */
+  /* For example, display only the first two or three, and make them smaller */
+  .floating-box:nth-child(1) {
+    display: block; /* Show this one */
+    width: 60px;
+    height: 60px;
+    top: 5%;
+    left: 5%;
+    animation-duration: 15s; /* Slightly faster animation */
+    transform: scale(0.8); /* Make it a bit smaller */
+  }
+  .floating-box:nth-child(2) {
+    display: block; /* Show this one */
+    width: 40px;
+    height: 40px;
+    top: 30%;
+    right: 5%;
+    animation-duration: 12s;
+    transform: scale(0.7);
+  }
+  .floating-box:nth-child(4) { /* Example: show a smaller one */
+    display: block;
+    width: 30px;
+    height: 30px;
+    bottom: 10%;
+    left: 10%;
+    animation-duration: 10s;
+    transform: scale(0.6);
+  }
+}
+
+/* For even smaller mobile screens, hide almost all if they still clutter */
+@media (max-width: 480px) {
+    .floating-box:nth-child(1) {
+        width: 40px;
+        height: 40px;
+        top: 2%;
+        left: 2%;
+        animation-duration: 10s;
+    }
+    .floating-box:nth-child(2) {
+        display: none; /* Hide the second one too, keep it minimal */
+    }
+    .floating-box:nth-child(4) {
+        width: 25px;
+        height: 25px;
+        bottom: 5%;
+        left: 5%;
+        animation-duration: 8s;
+    }
+}
